@@ -7,21 +7,35 @@ export default class Matrix extends Component {
 
   constructor() {
     super()
+    this.state = {
+        color: ''
+    }
   }
 
   genRow = (vals) => (
-    vals.map((val, idx) => <Cell key={idx} color={val} />)
+    vals.map((val, idx) => <Cell key={idx} color={val} getColor={this.getColor}/>)
   )
 
   genMatrix = () => (
     this.props.values.map((rowVals, idx) => <div key={idx} className="row">{this.genRow(rowVals)}</div>)
   )
 
+  //is this a "method?" not even really sure... method or function in this context....
+  hexColor = (str) => {
+      console.log('clicked', str)
+      this.setState({
+          color: str
+      })
+  }
+
+  getColor = () => {
+      return this.state.color
+  }
 
   render() {
     return (
       <div id="app">
-        <ColorSelector />
+        <ColorSelector hexColor={this.hexColor}/>
         <div id="matrix">
           {this.genMatrix()}
         </div>
